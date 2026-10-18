@@ -1,0 +1,189 @@
+CROP ADVISORY SYSTEM - INPUT RANGES FOR ALL OUTPUTS
+====================================================
+
+This guide matches the rules in the final Java project.
+
+INPUTS
+------
+1. Soil type:
+   1 = Alluvial
+   2 = Black
+   3 = Red
+   4 = Sandy
+   5 = Clayey
+   6 = Loamy
+
+2. Soil pH:
+   Any number from 0 to 14 is accepted by input validation.
+   A crop is only suitable if the pH falls within that crop's own range.
+
+3. Macronutrient indicator percentage:
+   0 to 33       = Low fertility
+   Above 33 to 66 = Medium fertility
+   Above 66 to 100 = High fertility
+
+4. Season:
+   1 = Kharif
+   2 = Rabi
+   3 = Zaid
+
+IMPORTANT
+---------
+A crop is displayed only when soil type, pH, fertility group, and season all
+match its rules. More than one crop can match. If none match, the program says
+"No crop in the selected season matched all the rules."
+
+Kharif crops
+============
+
+RICE
+- Soil type: Alluvial (1) or Clayey (5)
+- pH: 5.5 to 7.5 inclusive
+- Fertility: Medium or High
+- Nutrient percentage: Above 33 to 100
+- Season: Kharif (1)
+
+Example input:
+Soil type = 1, pH = 6.5, nutrient percentage = 50, season = 1
+Output includes: Rice
+
+MAIZE
+- Soil type: Alluvial (1), Loamy (6), or Red (3)
+- pH: 5.5 to 7.0 inclusive
+- Fertility: Medium or High
+- Nutrient percentage: Above 33 to 100
+- Season: Kharif (1)
+
+Example input:
+Soil type = 3, pH = 6.5, nutrient percentage = 50, season = 1
+Output includes: Maize
+
+COTTON
+- Soil type: Black (2) or Alluvial (1)
+- pH: 5.5 to 8.0 inclusive
+- Fertility: Low, Medium, or High
+- Nutrient percentage: 0 to 100
+- Season: Kharif (1)
+
+Example input:
+Soil type = 2, pH = 7.0, nutrient percentage = 20, season = 1
+Output includes: Cotton
+
+Rabi crops
+==========
+
+WHEAT
+- Soil type: Alluvial (1) or Loamy (6)
+- pH: 5.5 to 7.0 inclusive
+- Fertility: Medium or High
+- Nutrient percentage: Above 33 to 100
+- Season: Rabi (2)
+
+Example input:
+Soil type = 6, pH = 6.5, nutrient percentage = 50, season = 2
+Output includes: Wheat
+
+CHICKPEA
+- Soil type: Black (2), Red (3), or Alluvial (1)
+- pH: 5.5 to 8.0 inclusive
+- Fertility: Low, Medium, or High
+- Nutrient percentage: 0 to 100
+- Season: Rabi (2)
+
+Example input:
+Soil type = 2, pH = 7.0, nutrient percentage = 90, season = 2
+Output includes: Chickpea
+
+MUSTARD
+- Soil type: Alluvial (1), Sandy (4), or Loamy (6)
+- pH: 5.5 to 7.5 inclusive
+- Fertility: Low, Medium, or High
+- Nutrient percentage: 0 to 100
+- Season: Rabi (2)
+
+Example input:
+Soil type = 4, pH = 6.5, nutrient percentage = 20, season = 2
+Output includes: Mustard
+
+Zaid crops
+==========
+
+WATERMELON
+- Soil type: Sandy (4), Loamy (6), or Alluvial (1)
+- pH: 5.5 to 7.5 inclusive
+- Fertility: Medium or High
+- Nutrient percentage: Above 33 to 100
+- Season: Zaid (3)
+
+Example input:
+Soil type = 4, pH = 6.5, nutrient percentage = 50, season = 3
+Output includes: Watermelon
+
+CUCUMBER
+- Soil type: Sandy (4), Loamy (6), or Alluvial (1)
+- pH: 5.5 to 7.0 inclusive
+- Fertility: Medium or High
+- Nutrient percentage: Above 33 to 100
+- Season: Zaid (3)
+
+Example input:
+Soil type = 6, pH = 6.5, nutrient percentage = 50, season = 3
+Output includes: Cucumber
+
+GREEN GRAM (MOONG)
+- Soil type: Alluvial (1), Sandy (4), or Red (3)
+- pH: 5.5 to 7.5 inclusive
+- Fertility: Low, Medium, or High
+- Nutrient percentage: 0 to 100
+- Season: Zaid (3)
+
+Example input:
+Soil type = 3, pH = 6.5, nutrient percentage = 90, season = 3
+Output includes: Green Gram (Moong)
+
+COMBINATIONS THAT RETURN MULTIPLE CROPS
+=======================================
+
+1. Alluvial (1), pH 6.5, percentage 50, Kharif (1)
+   Expected: Rice, Maize, Cotton
+
+2. Alluvial (1), pH 6.5, percentage 50, Rabi (2)
+   Expected: Wheat, Chickpea, Mustard
+
+3. Alluvial (1), pH 6.5, percentage 50, Zaid (3)
+   Expected: Watermelon, Cucumber, Green Gram (Moong)
+
+NO-MATCH TEST CASES
+===================
+
+1. Sandy (4), pH 6.5, percentage 50, Kharif (1)
+   Expected: No crop in the selected season matched all the rules.
+
+2. Clayey (5), pH 6.5, percentage 50, Rabi (2)
+   Expected: No crop in the selected season matched all the rules.
+
+3. Clayey (5), pH 6.5, percentage 50, Zaid (3)
+   Expected: No crop in the selected season matched all the rules.
+
+4. Black (2), pH 4.0, percentage 50, Kharif (1)
+   Expected: No crop in the selected season matched all the rules.
+
+5. Loamy (6), pH 8.5, percentage 50, Zaid (3)
+   Expected: No crop in the selected season matched all the rules.
+
+INPUT VALIDATION TESTS
+======================
+
+- Soil menu choice 0 or 7: rejected; asks again.
+- pH -1 or 15: rejected; asks again.
+- Nutrient percentage -1 or 101: rejected; asks again.
+- Entering text such as abc in a numeric field: rejected; asks again.
+
+NOTES
+=====
+- Ranges are inclusive at their stated pH endpoints.
+- Fertility groups are calculated by the program from the percentage.
+- High fertility is allowed for Chickpea and Green Gram in this final version.
+- These rules are simplified for an educational Java project. The combined
+  macronutrient percentage is not a real laboratory measure of N, P, and K.
+  Do not use this guide as real agricultural advice.
